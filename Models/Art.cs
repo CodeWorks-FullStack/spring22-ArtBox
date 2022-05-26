@@ -17,6 +17,12 @@ namespace DaVinki.Models
     public string ImgUrl { get; set; }
     public string CreatorId { get; set; }
     public Profile Creator { get; set; }
+  }
 
+  public class ArtPurchaseViewModel : Art
+  {
+    public int PurchaseId { get; set; }
+    public double Price { get; set; }
+    public bool Delivered { get; set; }
   }
 }

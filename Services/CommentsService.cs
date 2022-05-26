@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using DaVinki.Models;
 using DaVinki.Repositories;
 
@@ -26,6 +27,21 @@ namespace DaVinki.Services
         throw new Exception("Invaild Comment Id");
       }
       return comment;
+    }
+
+    internal void Delete(int id, string userId)
+    {
+      Comment comment = Get(id);
+      if (comment.CreatorId != userId)
+      {
+        throw new Exception("Cannot delete other comment");
+      }
+      _repo.Delete(id);
+    }
+
+    internal List<Comment> GetCommentsForArt(int id)
+    {
+      return _repo.GetCommentsForArt(id);
     }
   }
 }

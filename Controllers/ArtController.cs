@@ -14,10 +14,12 @@ namespace DaVinki.Controllers
   public class ArtController : ControllerBase
   {
     private readonly ArtService _artServ;
+    private readonly CommentsService _cs;
 
-    public ArtController(ArtService artServ)
+    public ArtController(ArtService artServ, CommentsService cs)
     {
       _artServ = artServ;
+      _cs = cs;
     }
 
     // GET
@@ -43,6 +45,20 @@ namespace DaVinki.Controllers
       {
         Art art = _artServ.Get(id);
         return Ok(art);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
+    [HttpGet("{id}/comments")]
+    public ActionResult<List<Comment>> GetComments(int id)
+    {
+      try
+      {
+        List<Comment> comments = _cs.GetCommentsForArt(id);
+        return Ok(comments);
       }
       catch (Exception e)
       {

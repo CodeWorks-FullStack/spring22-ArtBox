@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Dapper;
@@ -42,6 +43,29 @@ namespace DaVinki.Repositories
         cmt.Creator = act;
         return cmt;
       }, new { id }).FirstOrDefault();
+    }
+
+    internal List<Comment> GetCommentsForArt(int id)
+    {
+      string sql = @"
+        SELECT
+          a.*,
+          c.*
+        FROM comments c
+        JOIN accounts a ON c.creatorId = a.id
+        WHERE c.artId = @id;
+      ";
+      return _db.Query<Account, Comment, Comment>(sql, (act, cmt) =>
+      {
+        cmt.Creator = act;
+        return cmt;
+      }, new { id }).ToList();
+    }
+
+    internal void Delete(int id)
+    {
+      string sql = "DELETE FROM comments WHERE id = @id LIMIT 1";
+      _db.Execute(sql, new { id });
     }
   }
 }

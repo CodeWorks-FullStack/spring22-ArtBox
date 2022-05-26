@@ -50,5 +50,21 @@ namespace DaVinki.Controllers
         return BadRequest(e.Message);
       }
     }
+
+    [HttpDelete("{id}")]
+    [Authorize]
+    public async Task<ActionResult<String>> Delete(int id)
+    {
+      try
+      {
+        Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+        _cs.Delete(id, userInfo.Id);
+        return Ok("Deleted Comment");
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
   }
 }

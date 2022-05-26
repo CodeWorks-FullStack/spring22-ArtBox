@@ -42,11 +42,69 @@ CREATE TABLE IF NOT EXISTS comments(
 
 
 
+CREATE TABLE IF NOT EXISTS purchases(
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  artId INT NOT NULL,
+  accountId VARCHAR(255) NOT NULL,
+  price DECIMAL(6, 2) NOT NULL,
+  delivered TINYINT NOT NULL DEFAULT 0,
+
+  FOREIGN KEY (artId)
+    REFERENCES art(id)
+    ON DELETE CASCADE,
+
+  FOREIGN KEY (accountId)
+    REFERENCES accounts(id)
+    ON DELETE CASCADE
+)default charset utf8;
+
+
 
 
 
 
 /* Playground */
+INSERT INTO purchases
+(artId, accountId, price)
+VALUES
+(1, "628e650a2dbad264cba2fc33", 1097.11);
+
+
+/* get all through relationship */
+
+SELECT
+ a.*,
+ p.price,
+ p.delivered,
+ p.id AS purchaseId
+FROM purchases p
+JOIN art a ON p.artId = a.id
+WHERE p.accountId = "jd123";
+
+
+/* WHEN POPULATING ON THE CHILD IN THE MANY TO MANY */
+SELECT
+ act.*,
+ a.*,
+ p.price,
+ p.delivered,
+ p.id AS purchaseId
+FROM purchases p
+JOIN art a ON p.artId = a.id
+JOIN accounts act ON a.creatorId = act.id
+WHERE p.accountId = "jd123";
+
+
+
+
+
+
+
+
+
+
+
+
 INSERT INTO accounts
 (id, name)
 VALUES
