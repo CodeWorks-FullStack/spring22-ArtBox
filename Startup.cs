@@ -36,6 +36,9 @@ namespace DaVinki
       services.AddScoped<AccountsRepository>();
       services.AddScoped<AccountService>();
 
+      services.AddTransient<CommentsRepository>();
+      services.AddTransient<CommentsService>();
+
       services.AddTransient<ArtRepository>();
       services.AddTransient<ArtService>();
 

@@ -7,8 +7,6 @@ namespace DaVinki.Models
     public string Picture { get; set; }
   }
 
-
-
   public class Account : Profile
   {
     public string Email { get; set; }

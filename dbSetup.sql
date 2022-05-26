@@ -23,6 +23,29 @@ CREATE TABLE IF NOT EXISTS art(
 ) default charset utf8;
 
 
+CREATE TABLE IF NOT EXISTS comments(
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',
+  body TEXT NOT NULL,
+  artId INT NOT NULL,
+  creatorId VARCHAR(255) NOT NULL,
+
+  FOREIGN KEY (creatorId)
+    REFERENCES accounts(id)
+    ON DELETE CASCADE,
+
+  FOREIGN KEY (artId)
+    REFERENCES art(id)
+    ON DELETE CASCADE
+
+) default charset utf8;
+
+
+
+
+
+
+
 /* Playground */
 INSERT INTO accounts
 (id, name)

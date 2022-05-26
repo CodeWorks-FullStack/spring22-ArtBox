@@ -24,12 +24,11 @@ namespace DaVinki.Repositories
       FROM art a
       JOIN accounts act ON a.creatorId = act.id;
       ";
-      return _db.Query<Art, Account, Art>(sql, (art, account) =>
+      return _db.Query<Art, Account, Art>(sql, (piece, account) =>
       {
-        art.Creator = account;
-        return art;
+        piece.Creator = account;
+        return piece;
       }).ToList();
-
     }
 
     internal Art Get(int id)
